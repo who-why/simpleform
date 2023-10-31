@@ -1,12 +1,25 @@
-import React from 'react';
-import SimpleForm from './SimpleForm';
+import "./App.css";
+import Dashboard from "./components/Dashboard";
+import Navbar from "./components/Navbar";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "./actions/action";
+import { useEffect } from "react";
 
 const App = () => {
-  return (
+  const dispatch = useDispatch();
+  const { tickets } = useSelector((state) => state.dataSlice);
+
+  useEffect(() => {
+    dispatch(fetchData());
+  }, [dispatch]);
+
+  return tickets ? (
     <div>
-      <h1>React Simple Form</h1>
-      <SimpleForm />
+      <Navbar />
+      <Dashboard />
     </div>
+  ) : (
+    console.error("Something went wrong")
   );
 };
 
